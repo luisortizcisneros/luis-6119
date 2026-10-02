@@ -1,5 +1,6 @@
+import AuthLayout from '../layouts/AuthLayout';
 
-import { Box, TextField, Button, Link, Grid } from '@mui/material'
+import { Box, TextField, Button, Link, Stack } from '@mui/material'
 import { useNavigate } from 'react-router-dom'
 import React from 'react'
 import type { UserData } from '../../types/types'
@@ -22,7 +23,7 @@ export default function Login({
     e.preventDefault();
     // Handle sign-in logic here
     const storedUser = getUser();
-    console.log('User Item:', storedUser)
+
     if (!storedUser) {
       return;
     }
@@ -35,61 +36,15 @@ export default function Login({
     navigate('/dashboard');
   }
   return (
-    <Grid
-      container
-      spacing={0}>
-      <Grid
-        size={6}>
-        <Box
-          component="section"
-          sx={{
-            color: "text.secondary",
-            bgcolor: "secondary.main",
-          }}
-        >
-          <h1>Snail Race</h1>
-        </Box>
-      </Grid>
-      <Grid
-        size={6}>
-        <Box
-          component="form"
-          sx={{
-            '& .MuiTextField-root': { m: 1, width: '25ch' },
-          }}
-          noValidate
-          autoComplete="off"
-          onSubmit={submitLogin}
-        >
-          <TextField
-            id="outlined-required"
-            label="Email"
-            type="email"
-            placeholder="example@domain.com"
-            onChange={(e) => setState({ ...state, email: e.target.value })}
-          />
-          <TextField
-            id="outlined-password-input"
-            label="Password"
-            type="password"
-            autoComplete="current-password"
-            onChange={(e) => setState({ ...state, password: e.target.value })}
-          />
-          <Button
-            type="submit"
-            name="submit"
-          >
-            Sign In
-          </Button>
-          <Link
-            component="button"
-            variant="body2"
-            onClick={() => navigate('/singup')}
-          >
-            Don't have an account? Sing up here.
-          </Link>
-        </Box>
-      </Grid>
-    </Grid>
-  )
+    <AuthLayout title="Welcome back." subtitle="Sign in and see how your favorites are doing.">
+      <Box component="form" onSubmit={submitLogin}>
+        <Stack spacing={2.5}>
+          <TextField required name="email" label="Email address" type="email" autoComplete="email" placeholder="you@example.com" value={state.email} onChange={(e) => setState({ ...state, email: e.target.value })} />
+          <TextField required name="password" label="Password" type="password" autoComplete="current-password" value={state.password} onChange={(e) => setState({ ...state, password: e.target.value })} />
+          <Button type="submit" variant="contained" fullWidth>Sign in →</Button>
+          <Link component="button" type="button" onClick={() => navigate('/singup')} sx={{ textAlign: 'center' }}>New to the club? Create an account</Link>
+        </Stack>
+      </Box>
+    </AuthLayout>
+  );
 }

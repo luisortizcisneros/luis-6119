@@ -5,7 +5,6 @@ import Login from './components/pages/Login';
 import Dashboard from './components/pages/Dashboard';
 import { SESSION_KEY, USER_KEY } from './utils/utils';
 import type { UserData } from './types/types';
-import './App.css'
 import SnailPay from './components/pages/SnailPay';
 
 
@@ -61,7 +60,6 @@ function App() {
           <ProtectedRoute>
             <Dashboard
               session={session}
-              user={user}
               clearSession={clearSession}
             />
           </ProtectedRoute>} />
